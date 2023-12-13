@@ -28,7 +28,11 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+.env*
 .env*.local
+.env*.dev
+.env*.prod
+!.env.example
 
 # vercel
 .vercel
@@ -36,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# migrations
+src/db/migrations/
