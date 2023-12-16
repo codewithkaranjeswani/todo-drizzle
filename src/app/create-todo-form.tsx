@@ -17,14 +17,15 @@ export function CreateTodoForm() {
         e.preventDefault();
         const form = e.target as HTMLFormElement;
         const formData = new FormData(form);
-        const fs = {
-          text: formData.get("todoText") as string,
-          errors: { text: undefined },
-        };
-        createTodoAction(fs, formData).then(() => form.reset());
+        wrappedCreateTodoAction(formData);
       }}
       className="flex flex-col gap-y-10 border p-5"
     >
+      <div className="absolute pt-16">
+        {formState.errors.text && (
+          <div className="text-red-400">{formState.errors.text}</div>
+        )}
+      </div>
       <Label htmlFor="text" className="py-5 text-xl">
         Create TodoItem
       </Label>
@@ -34,9 +35,6 @@ export function CreateTodoForm() {
         defaultValue={formState.text}
         placeholder="Your Daily Todo Item - like - Study Physics for 2 hours"
       />
-      {formState.errors.text && (
-        <div className="text-red-400">{formState.errors.text}</div>
-      )}
       <Button type="submit">Submit</Button>
     </form>
   );

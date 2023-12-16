@@ -1,17 +1,19 @@
 import { Label } from "@/components/ui/label";
 import { createTodoAction, deleteTodoAction, toggleTodoAction } from "./action";
 import { getAllTodos } from "@/server/todos";
-import { unstable_noStore } from "next/cache";
+import { unstable_noStore as noStore } from "next/cache";
 import { BoxIcon, CheckboxIcon, TrashIcon } from "@radix-ui/react-icons";
 import { CreateTodoForm } from "./create-todo-form";
 
 export default async function Home() {
-  unstable_noStore();
+  noStore();
   const todos = await getAllTodos();
 
   return (
     <div className="md:px-10 lg:px-40">
-      <div className="text-sm font-medium py-10">Save your TodoList here temporarily!</div>
+      <div className="text-sm font-medium py-10">
+        Save your TodoList here temporarily!
+      </div>
       <CreateTodoForm />
       <div className="py-5" />
       <div className="flex flex-col gap-y-5 border p-5">
