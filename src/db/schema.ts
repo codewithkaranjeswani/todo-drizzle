@@ -22,21 +22,20 @@ import {
  */
 export const mysqlTable = mysqlTableCreator((name) => `td_${name}`);
 
-export const posts = mysqlTable(
-  "post",
+export const todos = mysqlTable(
+  "todo",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
     name: varchar("name", { length: 256 }),
+    completed: boolean("completed").default(false).notNull(),
     authorId: varchar("author_id", { length: 255 }).notNull(),
     createdAt: timestamp("created_at").notNull(),
-    updatedAt: timestamp("updated_at")
-      .default(sql`CURRENT_TIMESTAMP`)
-      .notNull(),
+    updatedAt: timestamp("updated_at").notNull(),
   },
   (example) => ({
     authorIdIdx: index("author_id_idx").on(example.authorId),
     nameIndex: index("name_idx").on(example.name),
-  }),
+  })
 );
 
 export const users = mysqlTable("user", {

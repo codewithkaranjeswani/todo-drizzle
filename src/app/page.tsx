@@ -1,27 +1,47 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { createTodoAction, deleteTodoAction, toggleTodoAction } from "./action";
+import { getAllTodos } from "@/server/todos";
+import { unstable_noStore } from "next/cache";
+import { BoxIcon, CheckboxIcon, TrashIcon } from "@radix-ui/react-icons";
+import { CreateTodoForm } from "./create-todo-form";
 
-export default function Home() {
+export default async function Home() {
+  unstable_noStore();
+  const todos = await getAllTodos();
+
   return (
-    <div className="md:px-20">
-      <div className="text-sm font-medium py-10">Save your TodoList & Tasks here!</div>
-      <form
-        action={async (formData: FormData) => {
-          "use server";
-          // const text = formData.get("todoText") as string;
-          console.log("in form action");
-        }}
-        className="flex flex-col gap-y-5 border py-5 px-2"
-      >
-        <Label htmlFor="text">Create Todo</Label>
-        <Input
-          type="text"
-          name="todoText"
-          placeholder="Your Daily Todo Item - like - Study Physics for 2 hours"
-        />
-        <Button type="submit">Submit</Button>
-      </form>
+    <div className="md:px-10 lg:px-40">
+      <div className="text-sm font-medium py-10">Save your TodoList here temporarily!</div>
+      <CreateTodoForm />
+      <div className="py-5" />
+      <div className="flex flex-col gap-y-5 border p-5">
+        <Label htmlFor="text" className="py-5 text-xl">
+          TodoList
+        </Label>
+        <ul className="list-disc">
+          {todos.map((todo) => (
+            <li className="flex border-b p-2" key={todo.id}>
+              <form
+                action={toggleTodoAction.bind(null, todo.id)}
+                className="w-2/12"
+              >
+                <button>
+                  {todo.completed ? <CheckboxIcon /> : <BoxIcon />}
+                </button>
+              </form>
+              <div className="w-10/12">{todo.name}</div>
+              <form
+                action={deleteTodoAction.bind(null, todo.id)}
+                className="w-2/12"
+              >
+                <button className="text-red-400">
+                  <TrashIcon />
+                </button>
+              </form>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
