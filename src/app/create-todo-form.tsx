@@ -35,7 +35,7 @@ export function CreateTodoForm() {
         defaultValue={formState.text}
         placeholder="Your Daily Todo Item - like - Study Physics for 2 hours"
       />
-      <Button type="submit">Submit</Button>
+      <Button type="submit" variant={"outline"}>Submit</Button>
     </form>
   );
 }

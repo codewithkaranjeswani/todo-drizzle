@@ -10,7 +10,6 @@ export async function createTodoAction(
   state: CreateTodoFormState,
   formData: FormData
 ) {
-  console.log(state);
   const text = formData.get("todoText") as string;
   if (text === "") {
     return {
