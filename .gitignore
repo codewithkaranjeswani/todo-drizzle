@@ -42,4 +42,4 @@ yarn-error.log*
 next-env.d.ts
 
 # migrations
-src/db/migrations/
+src/server/db/migrations/

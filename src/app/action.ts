@@ -1,14 +1,14 @@
 "use server";
-import { db } from "@/db";
+import { db } from "@/server/db";
 import { eq } from "drizzle-orm";
-import { todos } from "@/db/schema";
+import { todos } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
 
 export type CreateTodoFormState = { text: string; errors: { text?: string } };
 
 export async function createTodoAction(
   state: CreateTodoFormState,
-  formData: FormData
+  formData: FormData,
 ) {
   const text = formData.get("todoText") as string;
   if (text === "") {
