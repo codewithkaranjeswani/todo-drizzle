@@ -15,34 +15,36 @@ export function CreateTodoForm({ session }: { session: Session | null }) {
     errors: { text: undefined },
   } as CreateTodoFormState);
   return (
-    <form
-      action={wrappedCreateTodoAction}
-      onSubmit={(e) => {
-        e.preventDefault();
-        const form = e.target as HTMLFormElement;
-        const formData = new FormData(form);
-        wrappedCreateTodoAction(formData);
-        form.reset();
-      }}
-      className="flex flex-col gap-y-10 border p-5"
-    >
-      <div className="absolute pt-16">
-        {formState.errors.text && (
-          <div className="text-red-400">{formState.errors.text}</div>
-        )}
-      </div>
-      <Label htmlFor="text" className="py-5 text-xl">
-        Create TodoItem
-      </Label>
-      <Input
-        type="text"
-        name="todoText"
-        defaultValue={formState.text}
-        placeholder="Your Daily Todo Item - like - Study Physics for 2 hours"
-      />
-      <Button type="submit" variant={"outline"}>
-        Submit
-      </Button>
-    </form>
+    <>
+      <form
+        action={wrappedCreateTodoAction}
+        onSubmit={(e) => {
+          e.preventDefault();
+          const form = e.target as HTMLFormElement;
+          const formData = new FormData(form);
+          wrappedCreateTodoAction(formData);
+          form.reset();
+        }}
+        className="flex flex-col gap-y-10 border-b p-5"
+      >
+        <div className="absolute px-2 pt-10">
+          {formState.errors.text && (
+            <div className="text-red-400 text-sm">{formState.errors.text}</div>
+          )}
+        </div>
+        {/* <Label htmlFor="text" className="py-5 text-xl"> */}
+        {/*   Create TodoItem */}
+        {/* </Label> */}
+        <Input
+          type="text"
+          name="todoText"
+          defaultValue={formState.text}
+          placeholder="Your Daily Todo Item - like - Study Physics for 2 hours"
+        />
+        <Button type="submit" variant={"outline"}>
+          Create Todo
+        </Button>
+      </form>
+    </>
   );
 }

@@ -5,12 +5,10 @@ import {
   index,
   int,
   mysqlTableCreator,
-  primaryKey,
   timestamp,
   uniqueIndex,
   varchar,
 } from "drizzle-orm/mysql-core";
-import { AdapterAccount } from "next-auth/adapters";
 /**
  * For db fields: Use camelCase in ts and snake_case in mysql, except wherever nextauth interferes!
  */
