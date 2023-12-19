@@ -8,7 +8,7 @@ export default async function EveryoneHome() {
   noStore();
   const todos = await getMyTodos();
   return (
-    <div className="md:px-10 lg:px-40">
+    <>
       <div className="py-5" />
       <Label htmlFor="text" className="py-5 px-7 text-xl">
         TodoList
@@ -18,6 +18,6 @@ export default async function EveryoneHome() {
       </div>
       <CreateTodoForm session={null} />
       <TodoList todos={todos} />
-    </div>
+    </>
   );
 }

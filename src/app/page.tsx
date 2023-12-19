@@ -7,7 +7,7 @@ export default async function Home() {
   noStore();
   const session = await getServerAuthSession();
   return (
-    <div className="md:px-10 lg:px-40">
+    <div className="md:px-10 lg:px-20">
       {session ? <PersonalizedHome session={session} /> : <EveryoneHome />}
     </div>
   );

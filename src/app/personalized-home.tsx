@@ -13,7 +13,7 @@ export default async function PersonalizedHome({
   noStore();
   const todos = await getMyTodos(session.user.id);
   return (
-    <div className="md:px-10 lg:px-40">
+    <>
       <div className="py-5" />
       <Label htmlFor="text" className="py-5 px-7 text-xl">
         TodoList
@@ -23,6 +23,6 @@ export default async function PersonalizedHome({
       </div>
       <CreateTodoForm session={session} />
       <TodoList todos={todos} />
-    </div>
+    </>
   );
 }
