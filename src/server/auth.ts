@@ -4,13 +4,10 @@ import {
   type NextAuthOptions,
   type DefaultUser,
 } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 
 import { env } from "@/env.mjs";
 import { db } from "@/server/db/index";
-import { mysqlTable } from "@/server/db/schema";
 import { USER_ROLE, UserRole } from "@/lib/types";
 import { DefaultJWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";

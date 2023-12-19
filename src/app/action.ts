@@ -9,6 +9,7 @@ export type CreateTodoFormState = { text: string; errors: { text?: string } };
 export async function createTodoAction(
   state: CreateTodoFormState,
   formData: FormData,
+  authorId?: string,
 ) {
   const text = formData.get("todoText") as string;
   if (text === "") {
@@ -23,7 +24,7 @@ export async function createTodoAction(
 
   await db.insert(todos).values({
     name: text,
-    authorId: "1",
+    authorId: authorId || "-1",
     createdAt: dt,
     updatedAt: dt,
   });
