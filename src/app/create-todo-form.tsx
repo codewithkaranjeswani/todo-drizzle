@@ -1,15 +1,20 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { CreateTodoFormState, createTodoAction } from "./action";
 import { useFormState } from "react-dom";
 import { type Session } from "next-auth";
 
-export function CreateTodoForm({ session }: { session: Session | null }) {
+export function CreateTodoForm({
+  session,
+  listId,
+}: {
+  session: Session | null;
+  listId: number;
+}) {
   const authorId = session?.user.id;
   const cta = (v: CreateTodoFormState, fd: FormData) =>
-    createTodoAction(v, fd, authorId);
+    createTodoAction(v, fd, listId, authorId);
   const [formState, wrappedCreateTodoAction] = useFormState(cta, {
     text: "",
     errors: { text: undefined },
@@ -32,9 +37,6 @@ export function CreateTodoForm({ session }: { session: Session | null }) {
             <div className="text-red-400 text-sm">{formState.errors.text}</div>
           )}
         </div>
-        {/* <Label htmlFor="text" className="py-5 text-xl"> */}
-        {/*   Create TodoItem */}
-        {/* </Label> */}
         <Input
           type="text"
           name="todoText"

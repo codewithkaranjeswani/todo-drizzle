@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   bigint,
   boolean,
@@ -21,21 +21,55 @@ import {
  */
 export const mysqlTable = mysqlTableCreator((name) => `td_${name}`);
 
+export const lists = mysqlTable(
+  "list",
+  {
+    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+    title: varchar("title", { length: 255 }),
+    authorId: varchar("author_id", { length: 255 }).notNull(),
+    createdAt: timestamp("created_at").notNull(),
+    updatedAt: timestamp("updated_at").notNull(),
+  },
+  (list) => ({
+    authorIdIdx: index("author_id_idx").on(list.authorId),
+  }),
+);
+
+export const listRelations = relations(lists, ({ one, many }) => ({
+  todos: many(todos),
+  author: one(users, {
+    fields: [lists.authorId],
+    references: [users.id],
+  }),
+}));
+
 export const todos = mysqlTable(
   "todo",
   {
     id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-    name: varchar("name", { length: 256 }),
+    listId: bigint("list_id", { mode: "number" }).notNull(),
+    content: varchar("content", { length: 255 }),
     completed: boolean("completed").default(false).notNull(),
     authorId: varchar("author_id", { length: 255 }).notNull(),
     createdAt: timestamp("created_at").notNull(),
     updatedAt: timestamp("updated_at").notNull(),
   },
-  (example) => ({
-    authorIdIdx: index("author_id_idx").on(example.authorId),
-    nameIndex: index("name_idx").on(example.name),
+  (todo) => ({
+    authorIdIdx: index("author_id_idx").on(todo.authorId),
+    contentIndex: index("content_idx").on(todo.content),
   }),
 );
+
+export const todoRelations = relations(todos, ({ one }) => ({
+  lists: one(lists, {
+    fields: [todos.listId],
+    references: [lists.id],
+  }),
+  author: one(users, {
+    fields: [todos.authorId],
+    references: [users.id],
+  }),
+}));
 
 export const users = mysqlTable("user", {
   id: varchar("id", { length: 255 }).notNull().primaryKey(),
@@ -49,6 +83,11 @@ export const users = mysqlTable("user", {
   role: varchar("role", { length: 255, enum: ["User", "Admin"] }),
   password: varchar("password", { length: 255 }),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  todos: many(todos),
+  tlists: many(lists),
+}));
 
 export const accounts = mysqlTable(
   "account",
