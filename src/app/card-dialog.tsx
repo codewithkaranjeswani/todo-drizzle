@@ -11,6 +11,8 @@ import { CreateTodoForm } from "./create-todo-form";
 import { Session } from "next-auth";
 import TodoList from "./todo-list";
 import { getTodosByListId } from "@/server/todos";
+import { deleteListAction } from "./action";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 export default async function CardDialog({
   session,
@@ -23,12 +25,22 @@ export default async function CardDialog({
   return (
     <>
       <Dialog>
-        <DialogTrigger asChild>
-          <Card>
-            <CardHeader>{list.title}</CardHeader>
-            <TodoList todos={todos} />
-          </Card>
-        </DialogTrigger>
+        <Card>
+          <CardHeader className="flex flex-row gap-x-2">
+            <DialogTrigger asChild>
+              <div className="w-11/12 hover:cursor-pointer">{list.title}</div>
+            </DialogTrigger>
+            <form
+              action={deleteListAction.bind(null, list.id)}
+              className="w-1/12"
+            >
+              <button className="text-red-400">
+                <TrashIcon />
+              </button>
+            </form>
+          </CardHeader>
+          <TodoList todos={todos} />
+        </Card>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{list.title}</DialogTitle>

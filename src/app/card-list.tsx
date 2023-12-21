@@ -17,7 +17,9 @@ export default async function CardList({
           key={list.id}
           fallback={
             <Card>
-              <CardHeader>{list.title}</CardHeader>
+              <CardHeader>
+                <div className="w-11/12">{list.title}</div>
+              </CardHeader>
               <div className="p-5 text-center">Loading ... </div>
             </Card>
           }
