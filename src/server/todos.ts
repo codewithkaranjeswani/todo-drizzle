@@ -1,22 +1,6 @@
 import { db } from "@/server/db";
 import { lists, todos } from "@/server/db/schema";
-import { asc, desc, eq } from "drizzle-orm";
-
-// export async function getAllTodos() {
-//   return db.query.todos.findMany({
-//     orderBy: [asc(todos.id)],
-//   });
-// }
-
-// export async function getMyTodos(userId?: string) {
-//   if (!userId) {
-//     userId = "-1";
-//   }
-//   return db.query.todos.findMany({
-//     where: eq(todos.authorId, userId),
-//     orderBy: [desc(todos.createdAt)],
-//   });
-// }
+import { desc, eq } from "drizzle-orm";
 
 export async function getMyLists(userId?: string) {
   if (!userId) {

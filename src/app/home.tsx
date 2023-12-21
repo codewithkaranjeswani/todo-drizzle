@@ -1,12 +1,9 @@
-import { unstable_noStore as noStore } from "next/cache";
 import { Label } from "@/components/ui/label";
-import { getMyLists } from "@/server/todos";
 import { CreateListForm } from "./create-list-form";
 import CardList from "./card-list";
+import { Suspense } from "react";
 
-export default async function EveryoneHome() {
-  noStore();
-  const lists = await getMyLists();
+export default function EveryoneHome() {
   return (
     <>
       <div className="py-5" />
@@ -17,7 +14,11 @@ export default async function EveryoneHome() {
         Shared Todolist - Try it out
       </div>
       <CreateListForm session={null} />
-      <CardList session={null} lists={lists} />
+      <Suspense
+        fallback={<div className="py-10 text-center">Loading ... </div>}
+      >
+        <CardList session={null} />
+      </Suspense>
     </>
   );
 }

@@ -58,6 +58,16 @@ export async function toggleTodoAction(id: number) {
   revalidatePath("/");
 }
 
+export async function updateTodoContentAction(id: number, content: string) {
+  await db
+    .update(todos)
+    .set({
+      content: content,
+    })
+    .where(eq(todos.id, id));
+  revalidatePath("/");
+}
+
 export type CreateListFormState = { title: string; errors: { title?: string } };
 
 export async function createListAction(
@@ -70,7 +80,7 @@ export async function createListAction(
     return {
       title: title,
       errors: {
-        title: "Expected non-empty title",
+        text: "Expected non-empty text",
       },
     };
   }
@@ -89,4 +99,19 @@ export async function createListAction(
       title: undefined,
     },
   };
+}
+
+export async function updateListTitleAction(id: number, title: string) {
+  await db
+    .update(lists)
+    .set({
+      title: title,
+    })
+    .where(eq(lists.id, id));
+  revalidatePath("/");
+}
+
+export async function deleteListAction(id: number) {
+  await db.delete(lists).where(eq(lists.id, id));
+  revalidatePath("/");
 }
