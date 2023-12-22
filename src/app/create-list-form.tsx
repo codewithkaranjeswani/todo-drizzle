@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { type Session } from "next-auth";
-import { CreateListFormState, createListAction } from "./action";
 import { useFormState } from "react-dom";
+import { CreateListFormState, createListAction } from "./list-actions";
 
 export function CreateListForm({ session }: { session: Session | null }) {
   const authorId = session?.user.id;

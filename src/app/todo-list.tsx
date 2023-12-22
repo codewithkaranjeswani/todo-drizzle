@@ -1,5 +1,5 @@
 import { BoxIcon, CheckboxIcon, TrashIcon } from "@radix-ui/react-icons";
-import { deleteTodoAction, toggleTodoAction } from "./action";
+import { deleteTodoAction, toggleTodoAction } from "./todo-action";
 import { TodoType } from "@/lib/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

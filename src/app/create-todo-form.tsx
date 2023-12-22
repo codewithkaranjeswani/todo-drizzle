@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CreateTodoFormState, createTodoAction } from "./action";
+import { CreateTodoFormState, createTodoAction } from "./todo-action";
 import { useFormState } from "react-dom";
 import { type Session } from "next-auth";
 

@@ -11,8 +11,8 @@ import { CreateTodoForm } from "./create-todo-form";
 import { Session } from "next-auth";
 import TodoList from "./todo-list";
 import { getTodosByListId } from "@/server/todos";
-import { deleteListAction } from "./action";
 import { TrashIcon } from "@radix-ui/react-icons";
+import { deleteListAction } from "./list-actions";
 
 export default async function CardDialog({
   session,
