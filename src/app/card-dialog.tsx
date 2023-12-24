@@ -4,7 +4,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { ListType } from "@/lib/types";
 import { CreateTodoForm } from "./create-todo-form";
@@ -13,6 +12,7 @@ import TodoList from "./todo-list";
 import { getTodosByListId } from "@/server/todos";
 import { TrashIcon } from "@radix-ui/react-icons";
 import { deleteListAction } from "./list-actions";
+import EditableTitle from "./list-title";
 
 export default async function CardDialog({
   session,
@@ -27,9 +27,7 @@ export default async function CardDialog({
       <Dialog>
         <Card>
           <CardHeader className="flex flex-row gap-x-2">
-            <DialogTrigger asChild>
-              <div className="w-11/12 hover:cursor-pointer">{list.title}</div>
-            </DialogTrigger>
+            <EditableTitle list={list} />
             <form
               action={deleteListAction.bind(null, list.id)}
               className="w-1/12"
