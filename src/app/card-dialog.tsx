@@ -2,6 +2,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -23,30 +24,35 @@ export default async function CardDialog({
 }) {
   const todos = await getTodosByListId(list.id);
   return (
-    <>
-      <Dialog>
-        <Card>
-          <CardHeader className="flex flex-row gap-x-2">
-            <EditableTitle list={list} />
-            <form
-              action={deleteListAction.bind(null, list.id)}
-              className="w-1/12"
-            >
-              <button className="text-red-400">
-                <TrashIcon />
-              </button>
-            </form>
-          </CardHeader>
+    <Dialog>
+      <Card>
+        <CardHeader className="flex flex-row gap-x-2">
+          <EditableTitle list={list} />
+          <form
+            action={deleteListAction.bind(null, list.id)}
+            className="flex flex-row items-baseline w-1/12 m-0"
+          >
+            <button className="text-red-400">
+              <TrashIcon />
+            </button>
+          </form>
+        </CardHeader>
+        <TodoList todos={todos} />
+      </Card>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>{list.title}</DialogTitle>
+          <div className="py-2" />
+          <DialogDescription className="text-xs font-thin">
+            c {list.createdAt.toLocaleString()}
+          </DialogDescription>
+          <DialogDescription className="text-xs font-thin">
+            u {list.updatedAt.toLocaleString()}
+          </DialogDescription>
+          <CreateTodoForm session={session} listId={list.id} />
           <TodoList todos={todos} />
-        </Card>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>{list.title}</DialogTitle>
-            <CreateTodoForm session={session} listId={list.id} />
-            <TodoList todos={todos} />
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    </>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }

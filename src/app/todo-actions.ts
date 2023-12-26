@@ -20,6 +20,13 @@ export async function createTodoAction(
         text: "Expected non-empty text",
       },
     };
+  } else if (text.length > 255) {
+    return {
+      text: text,
+      errors: {
+        text: "Expected todo to have < 255 chars",
+      },
+    };
   }
   const dt = new Date();
 
@@ -53,6 +60,7 @@ export async function toggleTodoAction(id: number) {
     .update(todos)
     .set({
       completed: !todo?.completed,
+      updatedAt: new Date(),
     })
     .where(eq(todos.id, id));
   revalidatePath("/");
@@ -63,6 +71,7 @@ export async function updateTodoContentAction(id: number, content: string) {
     .update(todos)
     .set({
       content: content,
+      updatedAt: new Date(),
     })
     .where(eq(todos.id, id));
   revalidatePath("/");

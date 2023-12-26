@@ -19,6 +19,13 @@ export async function createListAction(
         title: "Expected non-empty title",
       },
     };
+  } else if (title.length > 255) {
+    return {
+      title: title,
+      errors: {
+        title: "Expected title to have < 255 chars",
+      },
+    };
   }
   const dt = new Date();
 
@@ -42,6 +49,7 @@ export async function updateListTitleAction(id: number, title: string) {
     .update(lists)
     .set({
       title: title,
+      updatedAt: new Date(),
     })
     .where(eq(lists.id, id));
   revalidatePath("/");
