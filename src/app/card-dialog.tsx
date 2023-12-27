@@ -26,16 +26,18 @@ export default async function CardDialog({
   return (
     <Dialog>
       <Card>
-        <CardHeader className="flex flex-row gap-x-2">
-          <EditableTitle list={list} />
-          <form
-            action={deleteListAction.bind(null, list.id)}
-            className="flex flex-row items-baseline w-1/12 m-0"
-          >
-            <button className="text-red-400">
-              <TrashIcon />
-            </button>
-          </form>
+        <CardHeader>
+          <div className="flex flex-row">
+            <EditableTitle list={list} />
+            <form
+              action={deleteListAction.bind(null, list.id)}
+              className="py-1.5 w-1/12"
+            >
+              <button className="text-red-400">
+                <TrashIcon />
+              </button>
+            </form>
+          </div>
         </CardHeader>
         <TodoList todos={todos} />
       </Card>

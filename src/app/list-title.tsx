@@ -7,10 +7,7 @@ import { ListType } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import { DialogTrigger } from "@/components/ui/dialog";
 import { CardDescription, CardTitle } from "@/components/ui/card";
-
-function datefmt(dt: Date) {
-  return dt.toLocaleString("en-IN", { hour12: false, hourCycle: "h23" });
-}
+import { datefmt } from "@/lib/utils";
 
 export default function EditableTitle({ list }: { list: ListType }) {
   const [v, setV] = useState(list.title ?? "");
@@ -18,10 +15,10 @@ export default function EditableTitle({ list }: { list: ListType }) {
   return (
     <>
       {t ? (
-        <div className="flex flex-1 gap-x-2 items-baseline">
+        <div className="flex flex-1 gap-x-2 items-baseline w-11/12">
           <DialogTrigger asChild>
-            <div className="flex flex-col gap-y-2 w-10/12 hover:cursor-pointer">
-              <CardTitle>{v}</CardTitle>
+            <div className="flex flex-col gap-y-2 p-2 w-10/12 hover:cursor-pointer">
+              <CardTitle className="truncate">{v}</CardTitle>
               <div className="py-2" />
               <CardDescription className="text-xs font-thin">
                 c {datefmt(list.createdAt)}
@@ -31,16 +28,13 @@ export default function EditableTitle({ list }: { list: ListType }) {
               </CardDescription>
             </div>
           </DialogTrigger>
-          <button
-            className="flex w-2/12 items-center"
-            onClick={() => setT((p) => !p)}
-          >
+          <button className="" onClick={() => setT((p) => !p)}>
             <Pencil2Icon />
           </button>
         </div>
       ) : (
         <form
-          className="flex flex-1 gap-x-2 items-baseline"
+          className="flex flex-1 gap-x-2 items-baseline w-11/12"
           action={updateListTitleAction.bind(null, list.id, v)}
         >
           <Input
